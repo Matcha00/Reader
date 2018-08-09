@@ -1,0 +1,214 @@
+//
+//  ViewController.m
+//  Reader
+//
+//  Created by 陈欢 on 2018/8/9.
+//  Copyright © 2018年 Matcha00. All rights reserved.
+//
+
+#import "ViewController.h"
+#import <LKDBHelper.h>
+#import "ReaderModel.h"
+#import "ReaderTableViewCell.h"
+#import "ReaderViewController.h"
+#import "ReaderWebViewController.h"
+@interface ViewController () <UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *readerTableView;
+@property (nonatomic, strong) NSMutableArray *readerMutableArray;
+@property (nonatomic, copy) NSString *pbString;
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    
+    
+    self.readerTableView.delegate = self;
+    self.readerTableView.dataSource = self;
+    self.readerTableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    self.readerMutableArray = [ReaderModel searchWithWhere:nil];
+    [self.readerTableView registerNib:[UINib nibWithNibName:@"ReaderTableViewCell" bundle:nil] forCellReuseIdentifier:@"ReaderTableViewCell"];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refanceTable) name:@"updataTable" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(testPb) name:UIPasteboardChangedNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(testPb) name:UIApplicationDidBecomeActiveNotification object:nil];
+    // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)testPb
+{
+    NSLog(@"------------");
+    
+    
+    UIPasteboard *pb = [UIPasteboard generalPasteboard];
+    
+    NSLog(@"%@", pb.string);
+    
+    if (pb.string) {
+        
+        
+        self.pbString = pb.string;
+        
+        if ([pb.string hasPrefix:@"http"] || [pb.string hasPrefix:@"https"]) {
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.frame = CGRectMake(0, 0, 100, 400);
+            [button setTitle:pb.string forState:UIControlStateNormal];
+            //[button setTintColor:[UIColor redColor]];
+            button.backgroundColor = [UIColor blackColor];
+            [button addTarget:self action:@selector(openSaveVc) forControlEvents:UIControlEventTouchUpInside];
+            //[[UIApplication sharedApplication].keyWindow addSubview:button];
+            //[self.view insertSubview:button aboveSubview:self.readerTableView];
+            [self.view addSubview:button];
+        }
+        
+        
+        
+    }
+}
+
+- (void)refanceTable
+{
+    self.readerMutableArray = [ReaderModel searchWithWhere:nil];
+    [self.readerTableView reloadData];
+}
+
+- (void)openSaveVc
+{
+    ReaderViewController *vc = [[ReaderViewController alloc]init];
+    
+    vc.urlR = self.pbString;
+    
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark tableview delegate dataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.readerMutableArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ReaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ReaderTableViewCell"];
+    
+    if (!cell) {
+        cell = [[ReaderTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ReaderTableViewCell"];
+    }
+    
+    cell.model = self.readerMutableArray[indexPath.row];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ReaderModel *model = self.readerMutableArray[indexPath.row];
+    
+    ReaderWebViewController *webVc = [[ReaderWebViewController alloc]init];
+    webVc.urlWeb = model.urlReader;
+    webVc.showModel = model;
+    [self presentViewController:webVc animated:YES completion:nil];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100.f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100.f;
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return UITableViewCellEditingStyleNone;
+//}
+//
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    ReaderModel *moveModel = self.readerMutableArray[sourceIndexPath.row];
+    [self.readerMutableArray removeObject:moveModel];
+    [self.readerMutableArray insertObject:moveModel atIndex:destinationIndexPath.row];
+}
+
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewRowAction *del = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+
+        ReaderModel *delModel = self.readerMutableArray[indexPath.row];
+        [delModel deleteToDB];
+        [self.readerMutableArray removeObjectAtIndex:indexPath.row];
+        [self.readerTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+    }];
+
+    return @[del];
+}
+//- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UIContextualAction *test = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"del" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+//
+//    }];
+//
+//
+//    UISwipeActionsConfiguration *swCon = [UISwipeActionsConfiguration configurationWithActions:@[test]];
+//
+//    return swCon;
+//}
+//
+//- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UIContextualAction *test = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"del" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+//
+//    }];
+//
+//
+//    UISwipeActionsConfiguration *swCon = [UISwipeActionsConfiguration configurationWithActions:@[test]];
+//
+//    return swCon;
+//}
+
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updataTable" object:nil];
+}
+
+#pragma mark lazy
+
+- (NSMutableArray *)readerMutableArray
+{
+    if (!_readerMutableArray) {
+        _readerMutableArray = [[NSMutableArray alloc]init];
+    }
+    
+    return _readerMutableArray;
+}
+
+@end

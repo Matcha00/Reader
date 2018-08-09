@@ -1,0 +1,12 @@
+platform :ios, '10.0'
+target 'Reader' do
+    pod 'LKDBHelper'
+    
+    pod 'Masonry'
+    
+    pod 'MJRefresh'
+    pod 'YYText'
+    pod 'YYModel'
+    pod 'DZNEmptyDataSet'
+    
+end
