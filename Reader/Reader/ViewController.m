@@ -54,16 +54,47 @@
         self.pbString = pb.string;
         
         if ([pb.string hasPrefix:@"http"] || [pb.string hasPrefix:@"https"]) {
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = CGRectMake(0, 0, 100, 400);
-            [button setTitle:pb.string forState:UIControlStateNormal];
-            //[button setTintColor:[UIColor redColor]];
-            button.backgroundColor = [UIColor blackColor];
-            [button addTarget:self action:@selector(openSaveVc) forControlEvents:UIControlEventTouchUpInside];
-            //[[UIApplication sharedApplication].keyWindow addSubview:button];
-            //[self.view insertSubview:button aboveSubview:self.readerTableView];
-            [self.view addSubview:button];
+//            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//            button.frame = CGRectMake(0, 0, 100, 400);
+//            [button setTitle:pb.string forState:UIControlStateNormal];
+//            //[button setTintColor:[UIColor redColor]];
+//            button.backgroundColor = [UIColor blackColor];
+//            [button addTarget:self action:@selector(openSaveVc) forControlEvents:UIControlEventTouchUpInside];
+//            //[[UIApplication sharedApplication].keyWindow addSubview:button];
+//            //[self.view insertSubview:button aboveSubview:self.readerTableView];
+//            [self.view addSubview:button];
+            NSString *sql = [NSString stringWithFormat:@"SELECT * FROM Reader WHERE urlReader='%@'", pb.string];
+            if ([ReaderModel searchWithSQL:sql].count == 0) {
+                
+                UIAlertController *alertSaveUrl = [UIAlertController alertControllerWithTitle:@"是否保存文字" message:pb.string preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    ReaderViewController *vc = [[ReaderViewController alloc]init];
+                    
+                    vc.urlR = self.pbString;
+                    
+                    [self presentViewController:vc animated:YES completion:nil];
+                    
+                }];
+                [okAction setValue:[UIColor redColor] forKey:@"titleTextColor"];
+                
+                
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    
+                }];
+                
+                
+                [alertSaveUrl addAction:cancelAction];
+                [alertSaveUrl addAction:okAction];
+                
+                [self presentViewController:alertSaveUrl animated:YES completion:nil];
+                
+            }
+            
+            
         }
+        
+        
         
         
         
@@ -78,11 +109,7 @@
 
 - (void)openSaveVc
 {
-    ReaderViewController *vc = [[ReaderViewController alloc]init];
-    
-    vc.urlR = self.pbString;
-    
-    [self presentViewController:vc animated:YES completion:nil];
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -167,7 +194,7 @@
         [self.readerTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
     }];
-
+    
     return @[del];
 }
 //- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
