@@ -12,10 +12,16 @@
 #import "ReaderTableViewCell.h"
 #import "ReaderViewController.h"
 #import "ReaderWebViewController.h"
-@interface ViewController () <UITableViewDelegate,UITableViewDataSource>
+#import "BouncePresentAnimation.h"
+#import "NormalDismissAnimation.h"
+#import "SwipeUpInteractiveTransition.h"
+@interface ViewController () <UITableViewDelegate,UITableViewDataSource,ReaderViewControllerDelegate,UIViewControllerTransitioningDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *readerTableView;
 @property (nonatomic, strong) NSMutableArray *readerMutableArray;
 @property (nonatomic, copy) NSString *pbString;
+@property (nonatomic, strong) BouncePresentAnimation *presentAnimation;
+@property (nonatomic, strong) NormalDismissAnimation *dismissAnimation;
+@property (nonatomic, strong) SwipeUpInteractiveTransition *transitionController;
 @end
 
 @implementation ViewController
@@ -23,7 +29,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    _presentAnimation = [BouncePresentAnimation new];
+    _dismissAnimation = [NormalDismissAnimation new];
+    _transitionController = [SwipeUpInteractiveTransition new];
     
     self.readerTableView.delegate = self;
     self.readerTableView.dataSource = self;
@@ -70,7 +78,9 @@
                 UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     
                     ReaderViewController *vc = [[ReaderViewController alloc]init];
-                    
+                    vc.transitioningDelegate = self;
+                    vc.delegate = self;
+                    [self.transitionController wireToViewController:vc];
                     vc.urlR = self.pbString;
                     
                     [self presentViewController:vc animated:YES completion:nil];
@@ -236,6 +246,26 @@
     }
     
     return _readerMutableArray;
+}
+
+
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+{
+    return self.presentAnimation;
+}
+
+-(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+    return self.dismissAnimation;
+}
+
+-(id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator {
+    return self.transitionController.interacting ? self.transitionController : nil;
+}
+
+- (void)readerViewControllerDidClickedDismissButton:(ReaderViewController *)viewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

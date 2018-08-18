@@ -31,16 +31,26 @@
     
     //[self.editModel updateToDB];
     
-    ReaderModel *addModel = [[ReaderModel alloc]init];
+    if (self.titleTextField.text.length > 0) {
+        
+        ReaderModel *addModel = [[ReaderModel alloc]init];
+        
+        addModel.urlReader = _urlR;
+        addModel.readerTitle = self.titleTextField.text;
+        
+        [addModel saveToDB];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updataTable" object:nil];
+    }
     
-    addModel.urlReader = _urlR;
-    addModel.readerTitle = self.titleTextField.text;
     
-    [addModel saveToDB];
     
     //[[NSNotificationCenter defaultCenter] postNotificationName:@"updataTable" object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"updataTable" object:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(readerViewControllerDidClickedDismissButton:)]) {
+        [self.delegate readerViewControllerDidClickedDismissButton:self];
+    }
     
 }
 

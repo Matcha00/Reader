@@ -22,6 +22,9 @@
 		1812E92D211B544C00165F84 /* ReaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1812E92B211B544C00165F84 /* ReaderViewController.xib */; };
 		1812E931211B573400165F84 /* ReaderWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812E92F211B573400165F84 /* ReaderWebViewController.m */; };
 		1812E932211B573400165F84 /* ReaderWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1812E930211B573400165F84 /* ReaderWebViewController.xib */; };
+		1812E935212842A400165F84 /* BouncePresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812E934212842A400165F84 /* BouncePresentAnimation.m */; };
+		1812E9382128484800165F84 /* NormalDismissAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812E9372128484800165F84 /* NormalDismissAnimation.m */; };
+		1812E93B21284B8C00165F84 /* SwipeUpInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812E93A21284B8C00165F84 /* SwipeUpInteractiveTransition.m */; };
 		98C232A42F24A4DDCE97AB3F /* libPods-Reader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2F6B71EBA636A1A80B62B5 /* libPods-Reader.a */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +73,12 @@
 		1812E92E211B573400165F84 /* ReaderWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReaderWebViewController.h; sourceTree = "<group>"; };
 		1812E92F211B573400165F84 /* ReaderWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReaderWebViewController.m; sourceTree = "<group>"; };
 		1812E930211B573400165F84 /* ReaderWebViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReaderWebViewController.xib; sourceTree = "<group>"; };
+		1812E933212842A400165F84 /* BouncePresentAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BouncePresentAnimation.h; sourceTree = "<group>"; };
+		1812E934212842A400165F84 /* BouncePresentAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BouncePresentAnimation.m; sourceTree = "<group>"; };
+		1812E9362128484800165F84 /* NormalDismissAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormalDismissAnimation.h; sourceTree = "<group>"; };
+		1812E9372128484800165F84 /* NormalDismissAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NormalDismissAnimation.m; sourceTree = "<group>"; };
+		1812E93921284B8C00165F84 /* SwipeUpInteractiveTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwipeUpInteractiveTransition.h; sourceTree = "<group>"; };
+		1812E93A21284B8C00165F84 /* SwipeUpInteractiveTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwipeUpInteractiveTransition.m; sourceTree = "<group>"; };
 		7AEA7297CA80054CBAEE444E /* Pods-Reader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reader.release.xcconfig"; path = "Pods/Target Support Files/Pods-Reader/Pods-Reader.release.xcconfig"; sourceTree = "<group>"; };
 		9C2F6B71EBA636A1A80B62B5 /* libPods-Reader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Reader.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C832E73B9FFFD6210675B186 /* Pods-Reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Reader/Pods-Reader.debug.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +155,12 @@
 				1812E92E211B573400165F84 /* ReaderWebViewController.h */,
 				1812E92F211B573400165F84 /* ReaderWebViewController.m */,
 				1812E930211B573400165F84 /* ReaderWebViewController.xib */,
+				1812E933212842A400165F84 /* BouncePresentAnimation.h */,
+				1812E934212842A400165F84 /* BouncePresentAnimation.m */,
+				1812E9362128484800165F84 /* NormalDismissAnimation.h */,
+				1812E9372128484800165F84 /* NormalDismissAnimation.m */,
+				1812E93921284B8C00165F84 /* SwipeUpInteractiveTransition.h */,
+				1812E93A21284B8C00165F84 /* SwipeUpInteractiveTransition.m */,
 			);
 			path = Reader;
 			sourceTree = "<group>";
@@ -359,8 +374,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1812E935212842A400165F84 /* BouncePresentAnimation.m in Sources */,
 				1812E8F4211B4E7200165F84 /* ViewController.m in Sources */,
 				1812E928211B4F5E00165F84 /* ReaderModel.m in Sources */,
+				1812E93B21284B8C00165F84 /* SwipeUpInteractiveTransition.m in Sources */,
+				1812E9382128484800165F84 /* NormalDismissAnimation.m in Sources */,
 				1812E931211B573400165F84 /* ReaderWebViewController.m in Sources */,
 				1812E8FF211B4E7300165F84 /* main.m in Sources */,
 				1812E92C211B544C00165F84 /* ReaderViewController.m in Sources */,

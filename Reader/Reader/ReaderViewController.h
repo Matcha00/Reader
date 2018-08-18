@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ReaderViewController;
+@protocol ReaderViewControllerDelegate <NSObject>
+
+- (void) readerViewControllerDidClickedDismissButton:(ReaderViewController *)viewController;
+
+@end
+
+
 
 @interface ReaderViewController : UIViewController
 @property (nonatomic, copy) NSString *urlR;
+@property (nonatomic, weak) id<ReaderViewControllerDelegate> delegate;
 @end
