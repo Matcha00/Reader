@@ -15,6 +15,7 @@
 #import "BouncePresentAnimation.h"
 #import "NormalDismissAnimation.h"
 #import "SwipeUpInteractiveTransition.h"
+#import "LoadingHUD.h"
 @interface ViewController () <UITableViewDelegate,UITableViewDataSource,ReaderViewControllerDelegate,UIViewControllerTransitioningDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *readerTableView;
 @property (nonatomic, strong) NSMutableArray *readerMutableArray;
@@ -28,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [LoadingHUD showHUD];
     _presentAnimation = [BouncePresentAnimation new];
     _dismissAnimation = [NormalDismissAnimation new];
     _transitionController = [SwipeUpInteractiveTransition new];
@@ -36,7 +37,17 @@
     self.readerTableView.delegate = self;
     self.readerTableView.dataSource = self;
     self.readerTableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
-    self.readerMutableArray = [ReaderModel searchWithWhere:nil];
+    
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        self.readerMutableArray = [ReaderModel searchWithWhere:nil];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.readerTableView reloadData];
+            [LoadingHUD dismissHUD];
+        });
+    });
+    
     [self.readerTableView registerNib:[UINib nibWithNibName:@"ReaderTableViewCell" bundle:nil] forCellReuseIdentifier:@"ReaderTableViewCell"];
     
     
@@ -45,6 +56,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(testPb) name:UIApplicationDidBecomeActiveNotification object:nil];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    
 }
 
 - (void)testPb

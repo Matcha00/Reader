@@ -31,6 +31,8 @@
     
     //[self.editModel updateToDB];
     
+    
+    
     if (self.titleTextField.text.length > 0) {
         
         ReaderModel *addModel = [[ReaderModel alloc]init];
@@ -40,6 +42,12 @@
         
         [addModel saveToDB];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updataTable" object:nil];
+        
+        UIImpactFeedbackGenerator *impactLight = [[UIImpactFeedbackGenerator alloc]initWithStyle:UIImpactFeedbackStyleLight];
+        
+        [impactLight impactOccurred];
+        
+        
     }
     
     

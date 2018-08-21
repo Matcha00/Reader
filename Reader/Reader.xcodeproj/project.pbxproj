@@ -25,6 +25,7 @@
 		1812E935212842A400165F84 /* BouncePresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812E934212842A400165F84 /* BouncePresentAnimation.m */; };
 		1812E9382128484800165F84 /* NormalDismissAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812E9372128484800165F84 /* NormalDismissAnimation.m */; };
 		1812E93B21284B8C00165F84 /* SwipeUpInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812E93A21284B8C00165F84 /* SwipeUpInteractiveTransition.m */; };
+		7C2CC312212A9E55008523BF /* LoadingHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C2CC311212A9E55008523BF /* LoadingHUD.m */; };
 		98C232A42F24A4DDCE97AB3F /* libPods-Reader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2F6B71EBA636A1A80B62B5 /* libPods-Reader.a */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,8 @@
 		1812E93921284B8C00165F84 /* SwipeUpInteractiveTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwipeUpInteractiveTransition.h; sourceTree = "<group>"; };
 		1812E93A21284B8C00165F84 /* SwipeUpInteractiveTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwipeUpInteractiveTransition.m; sourceTree = "<group>"; };
 		7AEA7297CA80054CBAEE444E /* Pods-Reader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reader.release.xcconfig"; path = "Pods/Target Support Files/Pods-Reader/Pods-Reader.release.xcconfig"; sourceTree = "<group>"; };
+		7C2CC310212A9E55008523BF /* LoadingHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingHUD.h; sourceTree = "<group>"; };
+		7C2CC311212A9E55008523BF /* LoadingHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingHUD.m; sourceTree = "<group>"; };
 		9C2F6B71EBA636A1A80B62B5 /* libPods-Reader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Reader.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C832E73B9FFFD6210675B186 /* Pods-Reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Reader/Pods-Reader.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,6 +138,7 @@
 		1812E8EE211B4E7200165F84 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
+				7C2CC30F212A9E55008523BF /* LoadingHUD */,
 				1812E8EF211B4E7200165F84 /* AppDelegate.h */,
 				1812E8F0211B4E7200165F84 /* AppDelegate.m */,
 				1812E8F2211B4E7200165F84 /* ViewController.h */,
@@ -190,6 +194,15 @@
 				7AEA7297CA80054CBAEE444E /* Pods-Reader.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		7C2CC30F212A9E55008523BF /* LoadingHUD */ = {
+			isa = PBXGroup;
+			children = (
+				7C2CC310212A9E55008523BF /* LoadingHUD.h */,
+				7C2CC311212A9E55008523BF /* LoadingHUD.m */,
+			);
+			path = LoadingHUD;
 			sourceTree = "<group>";
 		};
 		9F92C4009FD3CCA388EBE667 /* Frameworks */ = {
@@ -382,6 +395,7 @@
 				1812E931211B573400165F84 /* ReaderWebViewController.m in Sources */,
 				1812E8FF211B4E7300165F84 /* main.m in Sources */,
 				1812E92C211B544C00165F84 /* ReaderViewController.m in Sources */,
+				7C2CC312212A9E55008523BF /* LoadingHUD.m in Sources */,
 				1812E924211B4F0000165F84 /* ReaderTableViewCell.m in Sources */,
 				1812E8F1211B4E7200165F84 /* AppDelegate.m in Sources */,
 			);
